@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/data-mock/data-mock.iml" filepath="$PROJECT_DIR$/data-mock/data-mock.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-core/spark-core.iml" filepath="$PROJECT_DIR$/spark-core/spark-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-core-project/spark-core-project.iml" filepath="$PROJECT_DIR$/spark-core-project/spark-core-project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-sql/spark-sql.iml" filepath="$PROJECT_DIR$/spark-sql/spark-sql.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-streaming/spark-streaming.iml" filepath="$PROJECT_DIR$/spark-streaming/spark-streaming.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark-streaming-project/spark-streaming-project.iml" filepath="$PROJECT_DIR$/spark-streaming-project/spark-streaming-project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spark0407.iml" filepath="$PROJECT_DIR$/spark0407.iml" />
+    </modules>
+  </component>
+</project>
