@@ -13,7 +13,7 @@ object Practice {
         val sc: SparkContext = new SparkContext(conf)
         
         // RDD[点击记录]  map
-        val lineRDD = sc.textFile("c:/agent.log")
+        val lineRDD = sc.textFile("agent.log")
         //  RDD[(省份, 广告), 1]    reduceByKey
         val provinceAdsOne = lineRDD.map(line => {
             val split: Array[String] = line.split(" ")
@@ -25,7 +25,7 @@ object Practice {
         val provinceAndAdsCount = provinceAdsCount.map {
             case ((pro, ads), count) => (pro, (ads, count))
         }
-        // RDD[(省份, Iterable((广告1, 10), (广告2, 7), (广告3. 5), ...))] 做map 只对内部的list排序, 取前3
+        // RDD[(省份, Iterable((广告1, 10), (广告2, 7), (广告3, 5), ...))] 做map 只对内部的list排序, 取前3
         val proAndAdsCountGrouped: RDD[(String, Iterable[(String, Int)])] = provinceAndAdsCount.groupByKey()
         // 不用能使用spark提供的排序!  用scala的排序
         val result = proAndAdsCountGrouped.map {

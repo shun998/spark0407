@@ -8,17 +8,18 @@ import org.apache.spark.{SparkConf, SparkContext}
  * Date 2021/3/14 10:18
  */
 object GroupByKey {
-    def main(args: Array[String]): Unit = {
-        val conf: SparkConf = new SparkConf().setAppName("GroupByKey").setMaster("local[2]")
-        val sc: SparkContext = new SparkContext(conf)
-        val rdd1 = sc.parallelize(Array("hello", "hello", "world", "hello", "layman", "hello", "layman", "layman"))
-        val wordOne: RDD[(String, Int)] = rdd1.map((_, 1))
-        val wordOneGrouped = wordOne.groupByKey().mapValues(_.sum)
-        wordOneGrouped.collect.foreach(println)
-        sc.stop()
-        
-    }
+  def main(args: Array[String]): Unit = {
+    val conf: SparkConf = new SparkConf().setMaster("local[2]").setAppName("GroupByKey")
+    val sc: SparkContext = new SparkContext(conf)
+    val rdd1: RDD[String] = sc.parallelize(Array("hello", "hello", "world", "hello", "layman", "hello", "layman", "layman"))
+    val wordOne: RDD[(String, Int)] = rdd1.map((_, 1))
+    val wordOneGrouped = wordOne.groupByKey().mapValues(_.sum)
+    wordOneGrouped.collect.foreach(println)
+    sc.stop()
+
+  }
 }
+
 /*
 groupByKey
     1. 分组. 按照Key进行分组

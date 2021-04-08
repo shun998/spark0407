@@ -8,17 +8,18 @@ import org.apache.spark.{SparkConf, SparkContext}
  * Date 2021/3/14 10:05
  */
 object ReduceByKey {
-    def main(args: Array[String]): Unit = {
-        val conf: SparkConf = new SparkConf().setAppName("ReduceByKey").setMaster("local[2]")
-        val sc: SparkContext = new SparkContext(conf)
-        val rdd1 = sc.parallelize(Array("hello", "hello", "world", "hello", "layman", "hello", "layman", "layman"))
-        val wordOne: RDD[(String, Int)] = rdd1.map((_, 1))
-        val rdd2: RDD[(String, Int)] = wordOne.reduceByKey(_ + _)
-        rdd2.collect.foreach(println)
-        sc.stop()
-        
-    }
+  def main(args: Array[String]): Unit = {
+    val conf: SparkConf = new SparkConf().setMaster("local[2]").setAppName("ReduceByKey")
+    val sc: SparkContext = new SparkContext(conf)
+    val rdd1: RDD[String] = sc.parallelize(Array("hello", "hello", "world", "hello", "layman", "hello", "layman", "layman"))
+    val wordOne: RDD[(String, Int)] = rdd1.map((_, 1))
+    val rdd2: RDD[(String, Int)] = wordOne.reduceByKey(_ + _)
+    rdd2.collect.foreach(println)
+    sc.stop()
+
+  }
 }
+
 /*
 reduceByKey.
     1. 是一个聚合算子
