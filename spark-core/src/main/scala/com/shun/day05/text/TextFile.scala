@@ -17,7 +17,6 @@ object TextFile {
             .reduceByKey(_ + _)
             //
             .saveAsTextFile("/word1017")
-        
         sc.stop()
         
     }
