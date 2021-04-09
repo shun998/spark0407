@@ -32,7 +32,6 @@ object Persit {
         rdd3.collect
         println("---华丽的分割线---")
         rdd3.collect
-        
         Thread.sleep(100000)
         sc.stop()
         

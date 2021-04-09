@@ -8,39 +8,40 @@ import org.apache.spark.{SparkConf, SparkContext}
  * Date 2021/3/16 15:37
  */
 object Checkpoint {
-    def main(args: Array[String]): Unit = {
-        val conf: SparkConf = new SparkConf().setAppName("Persit").setMaster("local[2]")
-        val sc: SparkContext = new SparkContext(conf)
-        sc.setCheckpointDir("./ck1")
-        val list1 = List(30)
-        val rdd1: RDD[Int] = sc.parallelize(list1, 2)
-    
-        val rdd2 = rdd1.map(x => {
-            println("map: " + x)
-            x + ": " + System.currentTimeMillis()
-        })
-        val rdd3 = rdd2.filter(x => {
-            println("filter: " + x)
-            true
-        })
-    
-        //        rdd3.persist(StorageLevel.MEMORY_ONLY)  // 做了一个持久化的计划, 当第一个行动算子执行完毕之后, 就会对这个rdd做持久化
-        //        rdd3.persist()
-        
-        rdd3.checkpoint()
-        rdd3.cache()
-        rdd3.collect.foreach(println)
-        println("---华丽的分割线---")
-        rdd3.collect.foreach(println)
-        println("---华丽的分割线---")
-        rdd3.collect.foreach(println)
-        println("---华丽的分割线---")
-        rdd3.collect.foreach(println)
-    
-        Thread.sleep(1000000)
-        sc.stop()
-    }
+  def main(args: Array[String]): Unit = {
+    val conf: SparkConf = new SparkConf().setAppName("Persit").setMaster("local[2]")
+    val sc: SparkContext = new SparkContext(conf)
+    sc.setCheckpointDir("./ck1")
+    val list1 = List(30)
+    val rdd1: RDD[Int] = sc.parallelize(list1, 2)
+
+    val rdd2 = rdd1.map(x => {
+      println("map: " + x)
+      x + ": " + System.currentTimeMillis()
+    })
+    val rdd3 = rdd2.filter(x => {
+      println("filter: " + x)
+      true
+    })
+
+    //        rdd3.persist(StorageLevel.MEMORY_ONLY)  // 做了一个持久化的计划, 当第一个行动算子执行完毕之后, 就会对这个rdd做持久化
+    //        rdd3.persist()
+
+    rdd3.checkpoint()
+    rdd3.cache()
+    rdd3.collect.foreach(println)
+    println("---华丽的分割线---")
+    rdd3.collect.foreach(println)
+    println("---华丽的分割线---")
+    rdd3.collect.foreach(println)
+    println("---华丽的分割线---")
+    rdd3.collect.foreach(println)
+
+    Thread.sleep(1000000)
+    sc.stop()
+  }
 }
+
 /*
 checkpoint:
     检查点

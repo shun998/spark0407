@@ -5,50 +5,53 @@ import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.rdd.RDD
 
 object SerDemo {
-    def main(args: Array[String]): Unit = {
-        val conf: SparkConf = new SparkConf().setAppName("SerDemo")
-            // 更换序列化器
-            .set("spark.serializer", classOf[Kryo].getName)  // 可以省略
-            // 注册那些需要使用Kryo序列化的类
-            .registerKryoClasses(Array(classOf[Searcher]))
-            .setMaster("local[*]")
-        val sc = new SparkContext(conf)
-        //
-        val rdd: RDD[String] = sc.parallelize(Array("hello world", "hello layman", "layman", "hahah"), 2)
-        //需求: 在 RDD 中查找出来包含 query 子字符串的元素
-        
-        // 是在driver创建的对象
-        val searcher = new Searcher("hello")  // 用来查找包含hello子字符串的那些字符串组成的rdd
-        // 也是在driver
-        val result: RDD[String] = searcher.getMatchedRDD1(rdd)
-        result.collect.foreach(println)
-    }
+  def main(args: Array[String]): Unit = {
+    val conf: SparkConf = new SparkConf().setAppName("SerDemo")
+      // 更换序列化器
+      .set("spark.serializer", classOf[Kryo].getName) // 可以省略
+      // 注册那些需要使用Kryo序列化的类
+      .registerKryoClasses(Array(classOf[Searcher]))
+      .setMaster("local[*]")
+    val sc = new SparkContext(conf)
+    //
+    val rdd: RDD[String] = sc.parallelize(Array("hello world", "hello layman", "layman", "hahah"), 2)
+    //需求: 在 RDD 中查找出来包含 query 子字符串的元素
+
+    // 是在driver创建的对象
+    val searcher = new Searcher("hello") // 用来查找包含hello子字符串的那些字符串组成的rdd
+    // 也是在driver
+    val result: RDD[String] = searcher.getMatchedRDD1(rdd)
+    result.collect.foreach(println)
+  }
 }
 
 
 // query 为需要查找的子字符串
 case class Searcher(val query: String) {
-    // 判断 s 中是否包括子字符串 query
-    def isMatch(s : String) ={
-        s.contains(query)
-    }
-    // 过滤出包含 query字符串的字符串组成的新的 RDD
-    def getMatchedRDD1(rdd: RDD[String]) ={
-        // .filter是在driver调用
-        // isMatch方法在executor上执行
-        rdd.filter(isMatch)
-    }
-    def getMatchedRDD2(rdd: RDD[String]) ={
-        // query 是对象的属性, 所以类也需要序列化
-        rdd.filter(x => x.contains(query))
-    }
-    
-    def getMatchedRDD3(rdd: RDD[String]) ={
-        val q = query
-        // query 是对象的属性, 所以类也需要序列化
-        rdd.filter(x => x.contains(q))
-    }
+  // 判断 s 中是否包括子字符串 query
+  def isMatch(s: String) = {
+    s.contains(query)
+  }
+
+  // 过滤出包含 query字符串的字符串组成的新的 RDD
+  def getMatchedRDD1(rdd: RDD[String]) = {
+    // .filter是在driver调用
+    // isMatch方法在executor上执行
+    rdd.filter(isMatch)
+  }
+
+  def getMatchedRDD2(rdd: RDD[String]) = {
+    // query 是对象的属性, 所以类也需要序列化
+    rdd.filter(x => x.contains(query))
+  }
+
+  def getMatchedRDD3(rdd: RDD[String]) = {
+    val q = query
+    // query 是对象的属性, 所以类也需要序列化
+    rdd.filter(x => x.contains(q))
+  }
 }
+
 /*
 序列化:
     1. java自带的序列化
