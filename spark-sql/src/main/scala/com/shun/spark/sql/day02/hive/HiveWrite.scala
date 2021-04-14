@@ -22,7 +22,7 @@ object HiveWrite {
         /*spark.sql("create table user1(id int, name string)").show
         spark.sql("insert into user1 values(10, 'lisi')").show*/
         
-        val df = spark.read.json("c:/users.json")
+        val df = spark.read.json("users.json")
         spark.sql("use spark1016")
         // 直接把数据写入到hive中. 表可以存着也可以不存在
         df.write.mode("append").saveAsTable("user2")

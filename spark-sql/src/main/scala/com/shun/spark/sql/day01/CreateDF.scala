@@ -13,7 +13,7 @@ object CreateDF {
             .builder().appName("CreateDF").master("local[2]")
             .getOrCreate()
         // 2. 通过SparkSession创建DF
-        val df = spark.read.json("c:/users.json")
+        val df = spark.read.json("users.json")
         // 3. 对DF做操作(sql)
         // 3.1 创建临时表
         df.createOrReplaceTempView("user")

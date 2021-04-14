@@ -21,7 +21,7 @@ object DF2RDD {
         val rdd = df.rdd
         val rdd1 = rdd.map(row => row.getInt(0))
         rdd1.collect.foreach(println)*/
-        val df = spark.read.json("c:/users.json")
+        val df = spark.read.json("users.json")
         df.printSchema()
         val rdd1 = df.rdd.map(row => {
             User(row.getString(1), row.getLong(0).toInt)

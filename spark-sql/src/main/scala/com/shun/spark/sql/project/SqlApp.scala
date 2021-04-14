@@ -57,7 +57,7 @@ object SqlApp {
         
         val props = new Properties()
         props.put("user", "root")
-        props.put("password", "aaaaaa")
+        props.put("password", "666666")
         
         spark.sql(
             """

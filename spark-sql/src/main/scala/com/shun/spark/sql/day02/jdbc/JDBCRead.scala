@@ -19,7 +19,7 @@ object JDBCRead {
         
         val url = "jdbc:mysql://hadoop102:3306/rdd"
         val user = "root"
-        val pw = "aaaaaa"
+        val pw = "666666"
         
         /*val df = spark.read
             .option("url", url)

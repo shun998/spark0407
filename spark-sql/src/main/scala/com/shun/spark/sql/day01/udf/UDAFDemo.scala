@@ -18,7 +18,7 @@ object UDAFDemo {
             .master("local[*]")
             .appName("UDAFDemo")
             .getOrCreate()
-        val df = spark.read.json("c:/users.json")
+        val df = spark.read.json("users.json")
         df.createOrReplaceTempView("user")
         // 注册聚合函数
         spark.udf.register("myAvg", new MyAvg)

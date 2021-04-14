@@ -17,7 +17,7 @@ object DFDS {
             .getOrCreate()
         import spark.implicits._
         
-        val df: DataFrame = spark.read.json("c:/users.json")
+        val df: DataFrame = spark.read.json("users.json")
         // 先有一个样例类
         val ds = df.as[People]
         //        ds.show()
